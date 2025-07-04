@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Route Map - Smart Route Optimizer{% endblock %}
+
+{% block extra_css %}
+<style>
+    .map-container {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    #map {
+        height: 500px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .route-info {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .info-icon {
+        font-size: 1.2rem;
+        color: var(--secondary-color);
+        margin-right: 10px;
+        width: 30px;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: var(--primary-color);
+        margin-right: 10px;
+    }
+
+    .info-value {
+        color: #666;
+    }
+
+    .btn-back {
+        background-color: #95a5a6;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="map-container">
+                <h2 class="text-center mb-4">Route Map</h2>
+                
+                <div id="map"></div>
+
+                <div class="route-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt info-icon"></i>
+                        <span class="info-label">Source:</span>
+                        <span class="info-value">{{ route.source }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt info-icon"></i>
+                        <span class="info-label">Destination:</span>
+                        <span class="info-value">{{ route.destinations }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-road info-icon"></i>
+                        <span class="info-label">Distance:</span>
+                        <span class="info-value">{{ "%.2f"|format(route.distance) }} km</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock info-icon"></i>
+                        <span class="info-label">Duration:</span>
+                        <span class="info-value">{{ "%.1f"|format(route.duration) }} hours</span>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="/saved_routes" class="btn btn-back">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Routes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    // Initialize map
+    var map = L.map('map').setView([0, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add markers and route
+    var sourceMarker = L.marker([{{ route.source_lat }}, {{ route.source_lon }}]).addTo(map);
+    sourceMarker.bindPopup('{{ route.source }}');
+
+    var destMarker = L.marker([{{ route.dest_lat }}, {{ route.dest_lon }}]).addTo(map);
+    destMarker.bindPopup('{{ route.destinations }}');
+
+    var routeLine = L.polyline([
+        [{{ route.source_lat }}, {{ route.source_lon }}],
+        [{{ route.dest_lat }}, {{ route.dest_lon }}]
+    ], {
+        color: '#3498db',
+        weight: 3,
+        opacity: 0.7
+    }).addTo(map);
+
+    // Fit map to show the entire route
+    map.fitBounds(routeLine.getBounds());
+</script>
+{% endblock %}

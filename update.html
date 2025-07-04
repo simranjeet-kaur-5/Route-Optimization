@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Update Route - Smart Route Optimizer{% endblock %}
+
+{% block extra_css %}
+<style>
+    .update-container {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .update-header {
+        margin-bottom: 30px;
+    }
+
+    .update-title {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: var(--primary-color);
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+
+    .btn-update {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-cancel {
+        background-color: #95a5a6;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-update:hover,
+    .btn-cancel:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .error-message {
+        color: var(--accent-color);
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="update-container">
+                <div class="update-header">
+                    <h2 class="update-title">
+                        <i class="fas fa-edit me-2"></i>Update Route
+                    </h2>
+                </div>
+
+                <form method="POST" action="/update/{{ obj.sno }}">
+                    <div class="mb-4">
+                        <label for="Source" class="form-label">Source Address</label>
+                        <input type="text" class="form-control" id="Source" name="Source" value="{{ obj.Source }}" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="Destinations" class="form-label">Destination Address</label>
+                        <input type="text" class="form-control" id="Destinations" name="Destinations" value="{{ obj.Destinations }}" required>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-update me-2">
+                            <i class="fas fa-save me-2"></i>Update Route
+                        </button>
+                        <a href="/saved_routes" class="btn btn-cancel">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

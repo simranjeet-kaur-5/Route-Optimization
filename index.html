@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Smart Route Optimizer - Home{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #3498db;
+        --accent-color: #e74c3c;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+    }
+
+    .navbar {
+        background-color: var(--primary-color);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar-brand {
+        font-weight: 600;
+        color: white !important;
+    }
+
+    .nav-link {
+        color: rgba(255,255,255,0.9) !important;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--secondary-color) !important;
+        transform: translateY(-2px);
+    }
+
+    .hero-section {
+        background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)),
+                    url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+    }
+
+    .get-started-btn {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+        border: none;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    }
+
+    .get-started-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        color: white;
+        background-color: #2980b9;
+    }
+
+    .features-section {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .feature-card {
+        text-align: center;
+        padding: 30px;
+        border-radius: 15px;
+        background: white;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 20px;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+    }
+
+    .feature-description {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .cta-description {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Smart Route Optimizer</h1>
+        <p class="hero-subtitle">Optimize your delivery routes with AI-powered recommendations</p>
+        <a href="{% if session.user_id %}/plan_routes{% else %}/signup{% endif %}" class="get-started-btn">
+            <i class="fas fa-rocket me-2"></i>Get Started
+        </a>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-route feature-icon"></i>
+                    <h3 class="feature-title">Smart Routing</h3>
+                    <p class="feature-description">
+                        Get optimized routes based on real-time traffic data and delivery priorities.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-clock feature-icon"></i>
+                    <h3 class="feature-title">Time Saving</h3>
+                    <p class="feature-description">
+                        Reduce delivery time with intelligent route planning and optimization.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <i class="fas fa-chart-line feature-icon"></i>
+                    <h3 class="feature-title">Performance Tracking</h3>
+                    <p class="feature-description">
+                        Monitor delivery performance and get insights for continuous improvement.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Ready to Optimize Your Routes?</h2>
+        <p class="cta-description">Join thousands of businesses already saving time and money with our platform.</p>
+        <a href="{% if session.user_id %}/plan_routes{% else %}/signup{% endif %}" class="get-started-btn">
+            <i class="fas fa-rocket me-2"></i>Get Started Now
+        </a>
+    </div>
+</section>
+{% endblock %}
